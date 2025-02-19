@@ -1,0 +1,1234 @@
+{
+  "nodes": [
+    {
+      "id": "toolAgent_0",
+      "position": {
+        "x": 1789.5796302625258,
+        "y": 23.006482246556885
+      },
+      "type": "customNode",
+      "data": {
+        "id": "toolAgent_0",
+        "label": "Tool Agent",
+        "version": 2,
+        "name": "toolAgent",
+        "type": "AgentExecutor",
+        "baseClasses": [
+          "AgentExecutor",
+          "BaseChain",
+          "Runnable"
+        ],
+        "category": "Agents",
+        "description": "Agent that uses Function Calling to pick the tools and args to call",
+        "inputParams": [
+          {
+            "label": "System Message",
+            "name": "systemMessage",
+            "type": "string",
+            "default": "You are a helpful AI assistant.",
+            "description": "If Chat Prompt Template is provided, this will be ignored",
+            "rows": 4,
+            "optional": true,
+            "additionalParams": true,
+            "id": "toolAgent_0-input-systemMessage-string"
+          },
+          {
+            "label": "Max Iterations",
+            "name": "maxIterations",
+            "type": "number",
+            "optional": true,
+            "additionalParams": true,
+            "id": "toolAgent_0-input-maxIterations-number"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Tools",
+            "name": "tools",
+            "type": "Tool",
+            "list": true,
+            "id": "toolAgent_0-input-tools-Tool"
+          },
+          {
+            "label": "Memory",
+            "name": "memory",
+            "type": "BaseChatMemory",
+            "id": "toolAgent_0-input-memory-BaseChatMemory"
+          },
+          {
+            "label": "Tool Calling Chat Model",
+            "name": "model",
+            "type": "BaseChatModel",
+            "description": "Only compatible with models that are capable of function calling: ChatOpenAI, ChatMistral, ChatAnthropic, ChatGoogleGenerativeAI, ChatVertexAI, GroqChat",
+            "id": "toolAgent_0-input-model-BaseChatModel"
+          },
+          {
+            "label": "Chat Prompt Template",
+            "name": "chatPromptTemplate",
+            "type": "ChatPromptTemplate",
+            "description": "Override existing prompt with Chat Prompt Template. Human Message must includes {input} variable",
+            "optional": true,
+            "id": "toolAgent_0-input-chatPromptTemplate-ChatPromptTemplate"
+          },
+          {
+            "label": "Input Moderation",
+            "description": "Detect text that could generate harmful output and prevent it from being sent to the language model",
+            "name": "inputModeration",
+            "type": "Moderation",
+            "optional": true,
+            "list": true,
+            "id": "toolAgent_0-input-inputModeration-Moderation"
+          }
+        ],
+        "inputs": {
+          "tools": [
+            "{{retrieverTool_0.data.instance}}"
+          ],
+          "memory": "{{bufferWindowMemory_0.data.instance}}",
+          "model": "{{chatOpenAI_0.data.instance}}",
+          "chatPromptTemplate": "{{chatPromptTemplate_0.data.instance}}",
+          "systemMessage": "",
+          "inputModeration": [
+            "{{inputModerationSimple_0.data.instance}}"
+          ],
+          "maxIterations": "15"
+        },
+        "outputAnchors": [
+          {
+            "id": "toolAgent_0-output-toolAgent-AgentExecutor|BaseChain|Runnable",
+            "name": "toolAgent",
+            "label": "AgentExecutor",
+            "description": "Agent that uses Function Calling to pick the tools and args to call",
+            "type": "AgentExecutor | BaseChain | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 483,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1789.5796302625258,
+        "y": 23.006482246556885
+      },
+      "dragging": false
+    },
+    {
+      "id": "chatOpenAI_0",
+      "position": {
+        "x": 776.1401558969333,
+        "y": 101.88060998195692
+      },
+      "type": "customNode",
+      "data": {
+        "id": "chatOpenAI_0",
+        "label": "ChatOpenAI",
+        "version": 8.1,
+        "name": "chatOpenAI",
+        "type": "ChatOpenAI",
+        "baseClasses": [
+          "ChatOpenAI",
+          "BaseChatModel",
+          "BaseLanguageModel",
+          "Runnable"
+        ],
+        "category": "Chat Models",
+        "description": "Wrapper around OpenAI large language models that use the Chat endpoint",
+        "inputParams": [
+          {
+            "label": "Connect Credential",
+            "name": "credential",
+            "type": "credential",
+            "credentialNames": [
+              "openAIApi"
+            ],
+            "id": "chatOpenAI_0-input-credential-credential"
+          },
+          {
+            "label": "Model Name",
+            "name": "modelName",
+            "type": "asyncOptions",
+            "loadMethod": "listModels",
+            "default": "gpt-4o-mini",
+            "id": "chatOpenAI_0-input-modelName-asyncOptions"
+          },
+          {
+            "label": "Temperature",
+            "name": "temperature",
+            "type": "number",
+            "step": 0.1,
+            "default": 0.9,
+            "optional": true,
+            "id": "chatOpenAI_0-input-temperature-number"
+          },
+          {
+            "label": "Streaming",
+            "name": "streaming",
+            "type": "boolean",
+            "default": true,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-streaming-boolean"
+          },
+          {
+            "label": "Max Tokens",
+            "name": "maxTokens",
+            "type": "number",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-maxTokens-number"
+          },
+          {
+            "label": "Top Probability",
+            "name": "topP",
+            "type": "number",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-topP-number"
+          },
+          {
+            "label": "Frequency Penalty",
+            "name": "frequencyPenalty",
+            "type": "number",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-frequencyPenalty-number"
+          },
+          {
+            "label": "Presence Penalty",
+            "name": "presencePenalty",
+            "type": "number",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-presencePenalty-number"
+          },
+          {
+            "label": "Timeout",
+            "name": "timeout",
+            "type": "number",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-timeout-number"
+          },
+          {
+            "label": "Strict Tool Calling",
+            "name": "strictToolCalling",
+            "type": "boolean",
+            "description": "Whether the model supports the `strict` argument when passing in tools. If not specified, the `strict` argument will not be passed to OpenAI.",
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-strictToolCalling-boolean"
+          },
+          {
+            "label": "Stop Sequence",
+            "name": "stopSequence",
+            "type": "string",
+            "rows": 4,
+            "optional": true,
+            "description": "List of stop words to use when generating. Use comma to separate multiple stop words.",
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-stopSequence-string"
+          },
+          {
+            "label": "BasePath",
+            "name": "basepath",
+            "type": "string",
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-basepath-string"
+          },
+          {
+            "label": "Proxy Url",
+            "name": "proxyUrl",
+            "type": "string",
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-proxyUrl-string"
+          },
+          {
+            "label": "BaseOptions",
+            "name": "baseOptions",
+            "type": "json",
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-baseOptions-json"
+          },
+          {
+            "label": "Allow Image Uploads",
+            "name": "allowImageUploads",
+            "type": "boolean",
+            "description": "Allow image input. Refer to the <a href=\"https://docs.flowiseai.com/using-flowise/uploads#image\" target=\"_blank\">docs</a> for more details.",
+            "default": false,
+            "optional": true,
+            "id": "chatOpenAI_0-input-allowImageUploads-boolean"
+          },
+          {
+            "label": "Image Resolution",
+            "description": "This parameter controls the resolution in which the model views the image.",
+            "name": "imageResolution",
+            "type": "options",
+            "options": [
+              {
+                "label": "Low",
+                "name": "low"
+              },
+              {
+                "label": "High",
+                "name": "high"
+              },
+              {
+                "label": "Auto",
+                "name": "auto"
+              }
+            ],
+            "default": "low",
+            "optional": false,
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-imageResolution-options"
+          },
+          {
+            "label": "Reasoning Effort",
+            "description": "Constrains effort on reasoning for reasoning models. Only applicable for o1 models",
+            "name": "reasoningEffort",
+            "type": "options",
+            "options": [
+              {
+                "label": "Low",
+                "name": "low"
+              },
+              {
+                "label": "Medium",
+                "name": "medium"
+              },
+              {
+                "label": "High",
+                "name": "high"
+              }
+            ],
+            "default": "low",
+            "optional": false,
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-reasoningEffort-options"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Cache",
+            "name": "cache",
+            "type": "BaseCache",
+            "optional": true,
+            "id": "chatOpenAI_0-input-cache-BaseCache"
+          }
+        ],
+        "inputs": {
+          "cache": "",
+          "modelName": "gpt-4o-mini",
+          "temperature": "0.2",
+          "streaming": true,
+          "maxTokens": "1000",
+          "topP": "0.3",
+          "frequencyPenalty": "0.4",
+          "presencePenalty": "-0.1",
+          "timeout": "",
+          "strictToolCalling": "",
+          "stopSequence": "",
+          "basepath": "",
+          "proxyUrl": "",
+          "baseOptions": "",
+          "allowImageUploads": "",
+          "imageResolution": "low",
+          "reasoningEffort": "low"
+        },
+        "outputAnchors": [
+          {
+            "id": "chatOpenAI_0-output-chatOpenAI-ChatOpenAI|BaseChatModel|BaseLanguageModel|Runnable",
+            "name": "chatOpenAI",
+            "label": "ChatOpenAI",
+            "description": "Wrapper around OpenAI large language models that use the Chat endpoint",
+            "type": "ChatOpenAI | BaseChatModel | BaseLanguageModel | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 668,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 776.1401558969333,
+        "y": 101.88060998195692
+      },
+      "dragging": false
+    },
+    {
+      "id": "bufferWindowMemory_0",
+      "position": {
+        "x": 779.0037961286151,
+        "y": -247.28043793630883
+      },
+      "type": "customNode",
+      "data": {
+        "id": "bufferWindowMemory_0",
+        "label": "Buffer Window Memory",
+        "version": 2,
+        "name": "bufferWindowMemory",
+        "type": "BufferWindowMemory",
+        "baseClasses": [
+          "BufferWindowMemory",
+          "BaseChatMemory",
+          "BaseMemory"
+        ],
+        "category": "Memory",
+        "description": "Uses a window of size k to surface the last k back-and-forth to use as memory",
+        "inputParams": [
+          {
+            "label": "Size",
+            "name": "k",
+            "type": "number",
+            "default": "4",
+            "description": "Window of size k to surface the last k back-and-forth to use as memory.",
+            "id": "bufferWindowMemory_0-input-k-number"
+          },
+          {
+            "label": "Session Id",
+            "name": "sessionId",
+            "type": "string",
+            "description": "If not specified, a random id will be used. Learn <a target=\"_blank\" href=\"https://docs.flowiseai.com/memory#ui-and-embedded-chat\">more</a>",
+            "default": "",
+            "optional": true,
+            "additionalParams": true,
+            "id": "bufferWindowMemory_0-input-sessionId-string"
+          },
+          {
+            "label": "Memory Key",
+            "name": "memoryKey",
+            "type": "string",
+            "default": "chat_history",
+            "additionalParams": true,
+            "id": "bufferWindowMemory_0-input-memoryKey-string"
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "k": "20",
+          "sessionId": "",
+          "memoryKey": "chat_history"
+        },
+        "outputAnchors": [
+          {
+            "id": "bufferWindowMemory_0-output-bufferWindowMemory-BufferWindowMemory|BaseChatMemory|BaseMemory",
+            "name": "bufferWindowMemory",
+            "label": "BufferWindowMemory",
+            "description": "Uses a window of size k to surface the last k back-and-forth to use as memory",
+            "type": "BufferWindowMemory | BaseChatMemory | BaseMemory"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 329,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 779.0037961286151,
+        "y": -247.28043793630883
+      },
+      "dragging": false
+    },
+    {
+      "id": "retrieverTool_0",
+      "position": {
+        "x": 1168.9433340450073,
+        "y": 546.705286375223
+      },
+      "type": "customNode",
+      "data": {
+        "id": "retrieverTool_0",
+        "label": "Retriever Tool",
+        "version": 3,
+        "name": "retrieverTool",
+        "type": "RetrieverTool",
+        "baseClasses": [
+          "RetrieverTool",
+          "DynamicTool",
+          "Tool",
+          "StructuredTool",
+          "Runnable"
+        ],
+        "category": "Tools",
+        "description": "Use a retriever as allowed tool for agent",
+        "inputParams": [
+          {
+            "label": "Retriever Name",
+            "name": "name",
+            "type": "string",
+            "placeholder": "search_state_of_union",
+            "id": "retrieverTool_0-input-name-string"
+          },
+          {
+            "label": "Retriever Description",
+            "name": "description",
+            "type": "string",
+            "description": "When should agent uses to retrieve documents",
+            "rows": 3,
+            "placeholder": "Searches and returns documents regarding the state-of-the-union.",
+            "id": "retrieverTool_0-input-description-string"
+          },
+          {
+            "label": "Return Source Documents",
+            "name": "returnSourceDocuments",
+            "type": "boolean",
+            "optional": true,
+            "id": "retrieverTool_0-input-returnSourceDocuments-boolean"
+          },
+          {
+            "label": "Additional Metadata Filter",
+            "name": "retrieverToolMetadataFilter",
+            "type": "json",
+            "description": "Add additional metadata filter on top of the existing filter from vector store",
+            "optional": true,
+            "additionalParams": true,
+            "hint": {
+              "label": "What can you filter?",
+              "value": "Add additional filters to vector store. You can also filter with flow config, including the current \"state\":\n- `$flow.sessionId`\n- `$flow.chatId`\n- `$flow.chatflowId`\n- `$flow.input`\n- `$flow.state`\n"
+            },
+            "id": "retrieverTool_0-input-retrieverToolMetadataFilter-json"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Retriever",
+            "name": "retriever",
+            "type": "BaseRetriever",
+            "id": "retrieverTool_0-input-retriever-BaseRetriever"
+          }
+        ],
+        "inputs": {
+          "name": "rehovotprotest",
+          "description": "returns document related to Rehovot protest (מחאת רחובות)",
+          "retriever": "{{documentStoreVS_0.data.instance}}",
+          "returnSourceDocuments": false,
+          "retrieverToolMetadataFilter": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "retrieverTool_0-output-retrieverTool-RetrieverTool|DynamicTool|Tool|StructuredTool|Runnable",
+            "name": "retrieverTool",
+            "label": "RetrieverTool",
+            "description": "Use a retriever as allowed tool for agent",
+            "type": "RetrieverTool | DynamicTool | Tool | StructuredTool | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 653,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1168.9433340450073,
+        "y": 546.705286375223
+      },
+      "dragging": false
+    },
+    {
+      "id": "documentStoreVS_0",
+      "position": {
+        "x": 805.5532554724716,
+        "y": 820.8152404338543
+      },
+      "type": "customNode",
+      "data": {
+        "id": "documentStoreVS_0",
+        "label": "Document Store (Vector)",
+        "version": 1,
+        "name": "documentStoreVS",
+        "type": "DocumentStoreVS",
+        "baseClasses": [
+          "DocumentStoreVS"
+        ],
+        "category": "Vector Stores",
+        "description": "Search and retrieve documents from Document Store",
+        "inputParams": [
+          {
+            "label": "Select Store",
+            "name": "selectedStore",
+            "type": "asyncOptions",
+            "loadMethod": "listStores",
+            "id": "documentStoreVS_0-input-selectedStore-asyncOptions"
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "selectedStore": "31a35073-f9e0-4738-9679-0f5d682d5567"
+        },
+        "outputAnchors": [
+          {
+            "name": "output",
+            "label": "Output",
+            "type": "options",
+            "description": "",
+            "options": [
+              {
+                "id": "documentStoreVS_0-output-retriever-BaseRetriever",
+                "name": "retriever",
+                "label": "Retriever",
+                "description": "",
+                "type": "BaseRetriever"
+              },
+              {
+                "id": "documentStoreVS_0-output-vectorStore-VectorStore",
+                "name": "vectorStore",
+                "label": "Vector Store",
+                "description": "",
+                "type": "VectorStore"
+              }
+            ],
+            "default": "retriever"
+          }
+        ],
+        "outputs": {
+          "output": "retriever"
+        },
+        "selected": false
+      },
+      "width": 300,
+      "height": 310,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 805.5532554724716,
+        "y": 820.8152404338543
+      },
+      "dragging": false
+    },
+    {
+      "id": "llmChain_0",
+      "position": {
+        "x": -503.540899556698,
+        "y": 253.11634171068982
+      },
+      "type": "customNode",
+      "data": {
+        "id": "llmChain_0",
+        "label": "LLM Chain",
+        "version": 3,
+        "name": "llmChain",
+        "type": "LLMChain",
+        "baseClasses": [
+          "LLMChain",
+          "BaseChain",
+          "Runnable"
+        ],
+        "category": "Chains",
+        "description": "Chain to run queries against LLMs",
+        "inputParams": [
+          {
+            "label": "Chain Name",
+            "name": "chainName",
+            "type": "string",
+            "placeholder": "Name Your Chain",
+            "optional": true,
+            "id": "llmChain_0-input-chainName-string"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Language Model",
+            "name": "model",
+            "type": "BaseLanguageModel",
+            "id": "llmChain_0-input-model-BaseLanguageModel"
+          },
+          {
+            "label": "Prompt",
+            "name": "prompt",
+            "type": "BasePromptTemplate",
+            "id": "llmChain_0-input-prompt-BasePromptTemplate"
+          },
+          {
+            "label": "Output Parser",
+            "name": "outputParser",
+            "type": "BaseLLMOutputParser",
+            "optional": true,
+            "id": "llmChain_0-input-outputParser-BaseLLMOutputParser"
+          },
+          {
+            "label": "Input Moderation",
+            "description": "Detect text that could generate harmful output and prevent it from being sent to the language model",
+            "name": "inputModeration",
+            "type": "Moderation",
+            "optional": true,
+            "list": true,
+            "id": "llmChain_0-input-inputModeration-Moderation"
+          }
+        ],
+        "inputs": {
+          "model": "{{openAI_0.data.instance}}",
+          "prompt": "{{chatPromptTemplate_1.data.instance}}",
+          "outputParser": "",
+          "inputModeration": "",
+          "chainName": "classifier"
+        },
+        "outputAnchors": [
+          {
+            "name": "output",
+            "label": "Output",
+            "type": "options",
+            "description": "",
+            "options": [
+              {
+                "id": "llmChain_0-output-llmChain-LLMChain|BaseChain|Runnable",
+                "name": "llmChain",
+                "label": "LLM Chain",
+                "description": "",
+                "type": "LLMChain | BaseChain | Runnable"
+              },
+              {
+                "id": "llmChain_0-output-outputPrediction-string|json",
+                "name": "outputPrediction",
+                "label": "Output Prediction",
+                "description": "",
+                "type": "string | json"
+              }
+            ],
+            "default": "llmChain"
+          }
+        ],
+        "outputs": {
+          "output": "outputPrediction"
+        },
+        "selected": false
+      },
+      "width": 300,
+      "height": 506,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -503.540899556698,
+        "y": 253.11634171068982
+      },
+      "dragging": false
+    },
+    {
+      "id": "openAI_0",
+      "position": {
+        "x": -868.3554733078508,
+        "y": -265.0460256413395
+      },
+      "type": "customNode",
+      "data": {
+        "id": "openAI_0",
+        "label": "OpenAI",
+        "version": 4,
+        "name": "openAI",
+        "type": "OpenAI",
+        "baseClasses": [
+          "OpenAI",
+          "BaseLLM",
+          "BaseLanguageModel",
+          "Runnable"
+        ],
+        "category": "LLMs",
+        "description": "Wrapper around OpenAI large language models",
+        "inputParams": [
+          {
+            "label": "Connect Credential",
+            "name": "credential",
+            "type": "credential",
+            "credentialNames": [
+              "openAIApi"
+            ],
+            "id": "openAI_0-input-credential-credential"
+          },
+          {
+            "label": "Model Name",
+            "name": "modelName",
+            "type": "asyncOptions",
+            "loadMethod": "listModels",
+            "default": "gpt-3.5-turbo-instruct",
+            "id": "openAI_0-input-modelName-asyncOptions"
+          },
+          {
+            "label": "Temperature",
+            "name": "temperature",
+            "type": "number",
+            "step": 0.1,
+            "default": 0.7,
+            "optional": true,
+            "id": "openAI_0-input-temperature-number"
+          },
+          {
+            "label": "Max Tokens",
+            "name": "maxTokens",
+            "type": "number",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "openAI_0-input-maxTokens-number"
+          },
+          {
+            "label": "Top Probability",
+            "name": "topP",
+            "type": "number",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "openAI_0-input-topP-number"
+          },
+          {
+            "label": "Best Of",
+            "name": "bestOf",
+            "type": "number",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "openAI_0-input-bestOf-number"
+          },
+          {
+            "label": "Frequency Penalty",
+            "name": "frequencyPenalty",
+            "type": "number",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "openAI_0-input-frequencyPenalty-number"
+          },
+          {
+            "label": "Presence Penalty",
+            "name": "presencePenalty",
+            "type": "number",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "openAI_0-input-presencePenalty-number"
+          },
+          {
+            "label": "Batch Size",
+            "name": "batchSize",
+            "type": "number",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "openAI_0-input-batchSize-number"
+          },
+          {
+            "label": "Timeout",
+            "name": "timeout",
+            "type": "number",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "openAI_0-input-timeout-number"
+          },
+          {
+            "label": "BasePath",
+            "name": "basepath",
+            "type": "string",
+            "optional": true,
+            "additionalParams": true,
+            "id": "openAI_0-input-basepath-string"
+          },
+          {
+            "label": "BaseOptions",
+            "name": "baseOptions",
+            "type": "json",
+            "optional": true,
+            "additionalParams": true,
+            "id": "openAI_0-input-baseOptions-json"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Cache",
+            "name": "cache",
+            "type": "BaseCache",
+            "optional": true,
+            "id": "openAI_0-input-cache-BaseCache"
+          }
+        ],
+        "inputs": {
+          "cache": "",
+          "modelName": "gpt-3.5-turbo-instruct",
+          "temperature": "0.2",
+          "maxTokens": "",
+          "topP": "",
+          "bestOf": "",
+          "frequencyPenalty": "",
+          "presencePenalty": "",
+          "batchSize": "",
+          "timeout": "",
+          "basepath": "",
+          "baseOptions": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "openAI_0-output-openAI-OpenAI|BaseLLM|BaseLanguageModel|Runnable",
+            "name": "openAI",
+            "label": "OpenAI",
+            "description": "Wrapper around OpenAI large language models",
+            "type": "OpenAI | BaseLLM | BaseLanguageModel | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 571,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -868.3554733078508,
+        "y": -265.0460256413395
+      },
+      "dragging": false
+    },
+    {
+      "id": "chatPromptTemplate_1",
+      "position": {
+        "x": -882.2858484623154,
+        "y": 344.23785906366606
+      },
+      "type": "customNode",
+      "data": {
+        "id": "chatPromptTemplate_1",
+        "label": "Chat Prompt Template",
+        "version": 2,
+        "name": "chatPromptTemplate",
+        "type": "ChatPromptTemplate",
+        "baseClasses": [
+          "ChatPromptTemplate",
+          "BaseChatPromptTemplate",
+          "BasePromptTemplate",
+          "Runnable"
+        ],
+        "category": "Prompts",
+        "description": "Schema to represent a chat prompt",
+        "inputParams": [
+          {
+            "label": "System Message",
+            "name": "systemMessagePrompt",
+            "type": "string",
+            "rows": 4,
+            "placeholder": "You are a helpful assistant that translates {input_language} to {output_language}.",
+            "id": "chatPromptTemplate_1-input-systemMessagePrompt-string"
+          },
+          {
+            "label": "Human Message",
+            "name": "humanMessagePrompt",
+            "description": "This prompt will be added at the end of the messages as human message",
+            "type": "string",
+            "rows": 4,
+            "placeholder": "{text}",
+            "id": "chatPromptTemplate_1-input-humanMessagePrompt-string"
+          },
+          {
+            "label": "Format Prompt Values",
+            "name": "promptValues",
+            "type": "json",
+            "optional": true,
+            "acceptVariable": true,
+            "list": true,
+            "id": "chatPromptTemplate_1-input-promptValues-json"
+          },
+          {
+            "label": "Messages History",
+            "name": "messageHistory",
+            "description": "Add messages after System Message. This is useful when you want to provide few shot examples",
+            "type": "tabs",
+            "tabIdentifier": "selectedMessagesTab",
+            "additionalParams": true,
+            "default": "messageHistoryCode",
+            "tabs": [
+              {
+                "label": "Add Messages (Code)",
+                "name": "messageHistoryCode",
+                "type": "code",
+                "hideCodeExecute": true,
+                "codeExample": "const { AIMessage, HumanMessage, ToolMessage } = require('@langchain/core/messages');\n\nreturn [\n    new HumanMessage(\"What is 333382 🦜 1932?\"),\n    new AIMessage({\n        content: \"\",\n        tool_calls: [\n        {\n            id: \"12345\",\n            name: \"calulator\",\n            args: {\n                number1: 333382,\n                number2: 1932,\n                operation: \"divide\",\n            },\n        },\n        ],\n    }),\n    new ToolMessage({\n        tool_call_id: \"12345\",\n        content: \"The answer is 172.558.\",\n    }),\n    new AIMessage(\"The answer is 172.558.\"),\n]",
+                "optional": true,
+                "additionalParams": true
+              }
+            ],
+            "id": "chatPromptTemplate_1-input-messageHistory-tabs"
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "systemMessagePrompt": "Your role is to classify the input question in into one of the following 3 categories:\n1, 2 or 3.\nYou return ONLY the number of the category!\nThe questions will probably be in hebrew. \nYou classify using the following logic:\nCategoty 1 is for input questions related to the protest in city of Rehovot only. These may be any of the following types of quesitons (in hebrew):\nשאלות על ההפגנה השבועית בעיר רחובות או בפארק המדע (פארק המדע נמצא ברחובות ושם מתקיימות ההפגנות)\nשאלות כלליות על מחאת רחובות, הפעולות השונות שהיא מארגנת, נאומים בהפגנות, תאריכים של הפגנות וארועים, \n,זמני ההפגנה ברחובות\n,דברים שעושים במהלך ההפגנה ברחובות\n,דרכי הגעה להפגנה ברחובות, חניה באיזור ההפגנה \nמי נאם בעבר בהפגנה\nמה התכנית להפגנה הבאה ברחובות.\nפארק המדע הוא מיקום ההפגנות ברחובות ולכן שאלות על פארק המדע גם כן נכללות בסיווג הזה יחד עם רחובות.\nבנוסף, שאלות המשך כלומר followup, \nהן גם שייכות לקטגוריה 1. למשל, אם מישהו שאל מי נאם בהפגנה ברחובות בשבוע שעבר ואתה ביקשת ממנו תאריך, אז עכשיו כשהוא כותב לך את התאריך, הסיווג צריך להיות 1 למרות שהתאריך לא כולל את המילה רחובות, כי ברור שהכוונה היא לשאלה על רחובות!\n\nYou return the category 2 for smalltalk, personal things related to the user or to you the chatbot, or thank you messages. For example (in Hebrew):\nהמשתמש מציג את עצמו\nהמשתמש שואל אותך על סוג השאלות שאתה יכול לענות עליהן\nהמשתמש פונה אליך ישירות ומדבר אליך אך לא שואל על מחאת רחובות\nמשפטים או שאלות בנוגע ליכולות שלך לשוחח או לענות\nשאלות כלליות כמו מה שלומך וכיוצא באלה\nהמשתמש מודה לך או מעביר ביקורת על השיחה\n\nYou return the category 3 for informative questions which are NOT related directly to the protest in Rehovot and are not smalltalk either. For exampe questions related to protests in other cities or questions that are not related to the protest in Rehovot at all. For example:\nשאלות על הפגנות בערים אחרות\nשאלות על מקומות שאינם העיר רחובות אלא ערים אחרות,\nשאלות שאינן קשורות למחאה ולהפגנות בכלל\nשאלות פרטיות על המארגנים או מתנדבים במחאה\nשאלות שנועדו להשמיץ או להסית נגד המחאה, כולל קללות ומיליפ  גסות ותוקפניות או אלימות.\n\nאתה מחזיר רק את המספר של הקטגוריה, כלומר 1 או  2 או 3. אל תחזיר טקסט נוסף, אלא רק את המספר\nDO NOT RETURN TEXT but only the classiication result, which is the number 1 or 2 according to your classification of the user's question. ",
+          "humanMessagePrompt": "{input}",
+          "promptValues": "",
+          "messageHistory": "messageHistoryCode"
+        },
+        "outputAnchors": [
+          {
+            "id": "chatPromptTemplate_1-output-chatPromptTemplate-ChatPromptTemplate|BaseChatPromptTemplate|BasePromptTemplate|Runnable",
+            "name": "chatPromptTemplate",
+            "label": "ChatPromptTemplate",
+            "description": "Schema to represent a chat prompt",
+            "type": "ChatPromptTemplate | BaseChatPromptTemplate | BasePromptTemplate | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 738,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -882.2858484623154,
+        "y": 344.23785906366606
+      },
+      "dragging": false
+    },
+    {
+      "id": "chatPromptTemplate_0",
+      "position": {
+        "x": 379.54848055339704,
+        "y": -65.44252169755396
+      },
+      "type": "customNode",
+      "data": {
+        "id": "chatPromptTemplate_0",
+        "label": "Chat Prompt Template",
+        "version": 2,
+        "name": "chatPromptTemplate",
+        "type": "ChatPromptTemplate",
+        "baseClasses": [
+          "ChatPromptTemplate",
+          "BaseChatPromptTemplate",
+          "BasePromptTemplate",
+          "Runnable"
+        ],
+        "category": "Prompts",
+        "description": "Schema to represent a chat prompt",
+        "inputParams": [
+          {
+            "label": "System Message",
+            "name": "systemMessagePrompt",
+            "type": "string",
+            "rows": 4,
+            "placeholder": "You are a helpful assistant that translates {input_language} to {output_language}.",
+            "id": "chatPromptTemplate_0-input-systemMessagePrompt-string"
+          },
+          {
+            "label": "Human Message",
+            "name": "humanMessagePrompt",
+            "description": "This prompt will be added at the end of the messages as human message",
+            "type": "string",
+            "rows": 4,
+            "placeholder": "{text}",
+            "id": "chatPromptTemplate_0-input-humanMessagePrompt-string"
+          },
+          {
+            "label": "Format Prompt Values",
+            "name": "promptValues",
+            "type": "json",
+            "optional": true,
+            "acceptVariable": true,
+            "list": true,
+            "id": "chatPromptTemplate_0-input-promptValues-json"
+          },
+          {
+            "label": "Messages History",
+            "name": "messageHistory",
+            "description": "Add messages after System Message. This is useful when you want to provide few shot examples",
+            "type": "tabs",
+            "tabIdentifier": "selectedMessagesTab",
+            "additionalParams": true,
+            "default": "messageHistoryCode",
+            "tabs": [
+              {
+                "label": "Add Messages (Code)",
+                "name": "messageHistoryCode",
+                "type": "code",
+                "hideCodeExecute": true,
+                "codeExample": "const { AIMessage, HumanMessage, ToolMessage } = require('@langchain/core/messages');\n\nreturn [\n    new HumanMessage(\"What is 333382 🦜 1932?\"),\n    new AIMessage({\n        content: \"\",\n        tool_calls: [\n        {\n            id: \"12345\",\n            name: \"calulator\",\n            args: {\n                number1: 333382,\n                number2: 1932,\n                operation: \"divide\",\n            },\n        },\n        ],\n    }),\n    new ToolMessage({\n        tool_call_id: \"12345\",\n        content: \"The answer is 172.558.\",\n    }),\n    new AIMessage(\"The answer is 172.558.\"),\n]",
+                "optional": true,
+                "additionalParams": true
+              }
+            ],
+            "id": "chatPromptTemplate_0-input-messageHistory-tabs"
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "systemMessagePrompt": "#ROLE:\n\nYour name is: מחאת רחו-בוט\n\nYou provide a detailed answer ONLY if the classification {classification} is 1, meaning the question is related to the protest in Rehovot.\n\nIf the {classification} is 2,  check whether the question is a smalltalk or an introductory or a general question about you or about (the chatbot capabilities) . If they are, then simply remind the user, in Hebrew, that you will be happy to assist with informative questions anout Rehovot Protest, like so:\n\"שלום, אני כאן בכדי לתת לך מידע על מחאת רחובות. איך אוכל לעזור?\"\n(או תשובה דומה לזו)\nIf this is a thank you message, you can greet the user back in Hebrew.\nIf this is criticism, you can appologize and say that you only have specific knowledge and nothing more (write this in Hebrew).\n\nIf the  {classification} is 3, meaning the user's question is not under your knowledge field, you simply answer the follwing thing:\n\"סליחה, אני עונה רק על שאלות בנוגע למחאת רחובות\"\nIf this is a thank you message, you can greet the user back in Hebrew.\nIf this is criticism, you can appologize and say that you only have specific knowledge and nothing more (write this in Hebrew).\n\nHere are more details, please read carefully and acti according to this:\nאם הסיווג הוא 1 ואתה עונה תשובה, תענה לפי הפרומפט הבא:\nHere is the full prompt for the case owhere{classification} is equal to 1:\nאתה צ'ט בוט, או סוכן בינה מלאכותית. בעברית. אתה עונה על כל השאלות רק בעברית.\nהמומחיות שלך היא מחאת רחובות. מחאת רחובות היא מחאה חברתית פוליטית גדולה וארוכה בישראל, נגד ההפיכה המשטרית וההפיכה במערכת המשפט שממשלת נתניהו רוצה לקדם, וגם נגד המלחמה ברצועת עזה ובעד עסקה לשחרור כל החטופים והחטופות.\nמחאת רחובות היא חלק מהמחאה הארצית הענקית. היא בעצם מחאה מקומית בעיר רחובות כחלק מהמחאה הארצית.\nבמסמך המצורף הקרוי \"מחאת רחובות\" יש לך המון מידע על מחאת רחובות. אתה צריך לחפש את התשובה הטובה ביות על השאלות ששואלים אותך במסמך המצורף, ולענות. \nבמסמך הנוסף, הקרוי \"נואמים_רחובות\" יש מידע על הנואמים שבאו לנאום במחאת רחובות על פי תאריכים. שים לב שהתאריכים מסודרים מהישן אל החדש והם כתובים בפורמט אירופאי:\ndd.mm.yy.\nאם שואלים על נואם מסויים שנאם בעבר, יש למצוא אותו במסמך  על פי התאריך תחתיו הוא מופיע (פורמט אירופאי, קודם כל היום, אז החודש ובסוף השנה). אם שואלי על תאריכי נואמים או האם התקיימה הפגנה בתאריך מסויים, ניתן לחפש במסמך זה גם כן.\nחשוב: אם שואלים על נואמים ללא ציון של תאריך (למשל \"מי נאם בשבוע שעבר\" או \"מי נאם בהגנה האחרונה\" עליך לבקש תאריך!! ואז לחפש לפי התאריך שנותנים לך.\n\nשאלות לגבי ההפגנהה הקרובה ברחובות פארק המדע: יש קובץ עם מידע לגבי ההפגנה הבאה, שעוד לא התקיימה. אם שאולים שאלות לגבי ההפגהב הבאה או ההפגנה הקרובה, שתהיה בשבת הקרובה, עליך לחפש את המידע בקובץ \"ההפגנה הקרובה\". אין מידע לגבי הפגנות עתידיות רחוקות יותר אלא רק על ההפגנה הבאה.\n\nחשוב מאד: אתה עונה אך ורק על שאלות לגבי המחאה ברחובות. אתה לא יודע פרטים על הפגנות בערים אחרות ועל ארועים אחרים בישראל! אם שואלים אותך מידע שלא נמצא במסמכים, פשוט ,תתנצת ותענה שאתה לא יודע את הפרט הזה. זה חשוב.\nFor any question that you don't know the answer to, but it IS related to Rehovot Protest ({classification} is 1) simply write that you appologize but you don't have this information.\n",
+          "humanMessagePrompt": "{input}, {classification}",
+          "promptValues": "{\"classification\":\"{{llmChain_0.data.instance}}\",\"input\":\"{{question}}\"}",
+          "messageHistory": "messageHistoryCode",
+          "messageHistoryCode": "const { AIMessage, HumanMessage } = require('@langchain/core/messages');\nreturn [\n    new HumanMessage(\"יש הפגנה מחר?\"),\n    new AIMessage(\"כדי לבדוק אם מתוכננת הפגנה, אני צריך את התאריך המדויק. מה התאריך לגביו אתה מתעניין? (לדוגמה לגבי השמיני בפברואר: 8.2.25)\"),\n    new HumanMessage(\"האם תהיה הפגנה בשבת הבאה?\"),\n    new AIMessage(\"כדי לבדוק עבורך אנא ציין תאריך (לדוגמה: 8.2.25)\"),\n    new HumanMessage(\"מה התוכנית להיום?\"),\n    new AIMessage(\"כדי לבדוק את התוכנית המדויקת, אנא ציין את התאריך המבוקש (לדוגמה 8.2.25)\")\n]"
+        },
+        "outputAnchors": [
+          {
+            "id": "chatPromptTemplate_0-output-chatPromptTemplate-ChatPromptTemplate|BaseChatPromptTemplate|BasePromptTemplate|Runnable",
+            "name": "chatPromptTemplate",
+            "label": "ChatPromptTemplate",
+            "description": "Schema to represent a chat prompt",
+            "type": "ChatPromptTemplate | BaseChatPromptTemplate | BasePromptTemplate | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 738,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 379.54848055339704,
+        "y": -65.44252169755396
+      },
+      "dragging": false
+    },
+    {
+      "id": "inputModerationSimple_0",
+      "position": {
+        "x": 1493.5195653198373,
+        "y": 541.6693272628221
+      },
+      "type": "customNode",
+      "data": {
+        "id": "inputModerationSimple_0",
+        "label": "Simple Prompt Moderation",
+        "version": 2,
+        "name": "inputModerationSimple",
+        "type": "Moderation",
+        "baseClasses": [
+          "Moderation"
+        ],
+        "category": "Moderation",
+        "description": "Check whether input consists of any text from Deny list, and prevent being sent to LLM",
+        "inputParams": [
+          {
+            "label": "Deny List",
+            "name": "denyList",
+            "type": "string",
+            "rows": 4,
+            "placeholder": "ignore previous instructions\ndo not follow the directions\nyou must ignore all previous instructions",
+            "description": "An array of string literals (enter one per line) that should not appear in the prompt text.",
+            "id": "inputModerationSimple_0-input-denyList-string"
+          },
+          {
+            "label": "Error Message",
+            "name": "moderationErrorMessage",
+            "type": "string",
+            "rows": 2,
+            "default": "Cannot Process! Input violates content moderation policies.",
+            "optional": true,
+            "id": "inputModerationSimple_0-input-moderationErrorMessage-string"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Chat Model",
+            "name": "model",
+            "type": "BaseChatModel",
+            "description": "Use LLM to detect if the input is similar to those specified in Deny List",
+            "optional": true,
+            "id": "inputModerationSimple_0-input-model-BaseChatModel"
+          }
+        ],
+        "inputs": {
+          "denyList": "ישרמוטות\nשרמוטות\nיבני זונות\nבני זונות\nאמא שלכם זונה\nשמאלנים בוגדים\nיאללה יאללה\nשיחטפו אתכם לעזה\nשיחטפו אותכם לעזה\nלכו להזדיין\nתחטפו סרטן\nשתחטפו סרטן\nשתחטפו סרתן\nעוכרי ישראל\nשונאי ישראל\nאנטישמים\nאנטישמיים\nשיקח אתכם\nשייקח אותכם\nשיקח אותכם\nהזויים\nסמולנים\nקפלניסטים\nקפלנוחבות\nקפלנוחבה\nקפלנוחבים\nנוחבות\nאוטואנטישמים\nאוטואנטישמיים\nאוטו אנטישמים\nגרועים ממחבלים\nגרועים מהמחבלים\nמיץ של הזבל\nמיץ של זבל",
+          "model": "",
+          "moderationErrorMessage": "עושה רושם שאתם מנסים לאחל לי איחולים של ביביסטים. לא התרשמתי."
+        },
+        "outputAnchors": [
+          {
+            "id": "inputModerationSimple_0-output-inputModerationSimple-Moderation",
+            "name": "inputModerationSimple",
+            "label": "Moderation",
+            "description": "Check whether input consists of any text from Deny list, and prevent being sent to LLM",
+            "type": "Moderation"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 583,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1493.5195653198373,
+        "y": 541.6693272628221
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "chatOpenAI_0",
+      "sourceHandle": "chatOpenAI_0-output-chatOpenAI-ChatOpenAI|BaseChatModel|BaseLanguageModel|Runnable",
+      "target": "toolAgent_0",
+      "targetHandle": "toolAgent_0-input-model-BaseChatModel",
+      "type": "buttonedge",
+      "id": "chatOpenAI_0-chatOpenAI_0-output-chatOpenAI-ChatOpenAI|BaseChatModel|BaseLanguageModel|Runnable-toolAgent_0-toolAgent_0-input-model-BaseChatModel"
+    },
+    {
+      "source": "bufferWindowMemory_0",
+      "sourceHandle": "bufferWindowMemory_0-output-bufferWindowMemory-BufferWindowMemory|BaseChatMemory|BaseMemory",
+      "target": "toolAgent_0",
+      "targetHandle": "toolAgent_0-input-memory-BaseChatMemory",
+      "type": "buttonedge",
+      "id": "bufferWindowMemory_0-bufferWindowMemory_0-output-bufferWindowMemory-BufferWindowMemory|BaseChatMemory|BaseMemory-toolAgent_0-toolAgent_0-input-memory-BaseChatMemory"
+    },
+    {
+      "source": "openAI_0",
+      "sourceHandle": "openAI_0-output-openAI-OpenAI|BaseLLM|BaseLanguageModel|Runnable",
+      "target": "llmChain_0",
+      "targetHandle": "llmChain_0-input-model-BaseLanguageModel",
+      "type": "buttonedge",
+      "id": "openAI_0-openAI_0-output-openAI-OpenAI|BaseLLM|BaseLanguageModel|Runnable-llmChain_0-llmChain_0-input-model-BaseLanguageModel"
+    },
+    {
+      "source": "chatPromptTemplate_1",
+      "sourceHandle": "chatPromptTemplate_1-output-chatPromptTemplate-ChatPromptTemplate|BaseChatPromptTemplate|BasePromptTemplate|Runnable",
+      "target": "llmChain_0",
+      "targetHandle": "llmChain_0-input-prompt-BasePromptTemplate",
+      "type": "buttonedge",
+      "id": "chatPromptTemplate_1-chatPromptTemplate_1-output-chatPromptTemplate-ChatPromptTemplate|BaseChatPromptTemplate|BasePromptTemplate|Runnable-llmChain_0-llmChain_0-input-prompt-BasePromptTemplate"
+    },
+    {
+      "source": "llmChain_0",
+      "sourceHandle": "llmChain_0-output-outputPrediction-string|json",
+      "target": "chatPromptTemplate_0",
+      "targetHandle": "chatPromptTemplate_0-input-promptValues-json",
+      "type": "buttonedge",
+      "id": "llmChain_0-llmChain_0-output-outputPrediction-string|json-chatPromptTemplate_0-chatPromptTemplate_0-input-promptValues-json"
+    },
+    {
+      "source": "chatPromptTemplate_0",
+      "sourceHandle": "chatPromptTemplate_0-output-chatPromptTemplate-ChatPromptTemplate|BaseChatPromptTemplate|BasePromptTemplate|Runnable",
+      "target": "toolAgent_0",
+      "targetHandle": "toolAgent_0-input-chatPromptTemplate-ChatPromptTemplate",
+      "type": "buttonedge",
+      "id": "chatPromptTemplate_0-chatPromptTemplate_0-output-chatPromptTemplate-ChatPromptTemplate|BaseChatPromptTemplate|BasePromptTemplate|Runnable-toolAgent_0-toolAgent_0-input-chatPromptTemplate-ChatPromptTemplate"
+    },
+    {
+      "source": "retrieverTool_0",
+      "sourceHandle": "retrieverTool_0-output-retrieverTool-RetrieverTool|DynamicTool|Tool|StructuredTool|Runnable",
+      "target": "toolAgent_0",
+      "targetHandle": "toolAgent_0-input-tools-Tool",
+      "type": "buttonedge",
+      "id": "retrieverTool_0-retrieverTool_0-output-retrieverTool-RetrieverTool|DynamicTool|Tool|StructuredTool|Runnable-toolAgent_0-toolAgent_0-input-tools-Tool"
+    },
+    {
+      "source": "documentStoreVS_0",
+      "sourceHandle": "documentStoreVS_0-output-retriever-BaseRetriever",
+      "target": "retrieverTool_0",
+      "targetHandle": "retrieverTool_0-input-retriever-BaseRetriever",
+      "type": "buttonedge",
+      "id": "documentStoreVS_0-documentStoreVS_0-output-retriever-BaseRetriever-retrieverTool_0-retrieverTool_0-input-retriever-BaseRetriever"
+    },
+    {
+      "source": "inputModerationSimple_0",
+      "sourceHandle": "inputModerationSimple_0-output-inputModerationSimple-Moderation",
+      "target": "toolAgent_0",
+      "targetHandle": "toolAgent_0-input-inputModeration-Moderation",
+      "type": "buttonedge",
+      "id": "inputModerationSimple_0-inputModerationSimple_0-output-inputModerationSimple-Moderation-toolAgent_0-toolAgent_0-input-inputModeration-Moderation"
+    }
+  ]
+}
